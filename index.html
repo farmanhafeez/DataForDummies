@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataForDummies - A free API service to generate random data</title>
+    <!-- FAVICON -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+    <link rel="manifest" href="favicon/site.webmanifest">
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
+        integrity="sha256-46r060N2LrChLLb5zowXQ72/iKKNiw/lAmygmHExk/o=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="header">
+        <!-- NAVIGATION BAR -->
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-bg-color">
+            <div class="container">
+                <a class="navbar-brand" href=""><span><i class="fas fa-sitemap fa-lg mr-2"></i></span>
+                    DataForDummies</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-item nav-link" href="#"><span><i class="fas fa-database mr-1"></i></span>
+                            Dataset</a>
+                        <a class="nav-item nav-link" href="#"><span><i class="fas fa-book mr-1"></i></span>
+                            Documentation</a>
+                        <a class="nav-item nav-link" href="api-testing"><span><i
+                                    class="fas fa-check-square mr-1"></i></span> Test your API</a>
+                        <a class="nav-item nav-link" href="#"><span><i class="fas fa-plus-square mr-1"></i></span>
+                            Generate data</a>
+                    </div>
+                    <a href="#contact">
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">
+                            <span><i class="fas fa-address-book mr-1"></i></span> Contact</button>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- JUMBOTRON -->
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-lg-6 text-center text-lg-left">
+                        <h1 class="hero-section">Data For Dummies</h1>
+                        <p class="lead my-4">A collective list of free API datasets for
+                            generating random test data. Read Documentation for more details.
+                        </p>
+                        <a href=""><button class="btn btn-light"><span><i class="fas fa-book mr-1"></i></span>
+                                <b>Documentation</b></button></a>
+                    </div>
+                    <div class="col-lg-5 d-none d-lg-block">
+                        <img src="img/data.svg" alt="Data for Dummies" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT US -->
+    <div class="site-section">
+        <div class="container">
+            <h1 class="section-heading mb-5">Why DataForDummies?</h1>
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <p class="lead text-center">There are plenty of
+                        great data mocking libraries available for almost every language and platform. But not everyone
+                        is a programmer or has time to learn a new framework. Data For Dummies allows you to quickly and
+                        easily to download large amounts of randomly generated test data based on your own specs which
+                        you can then load directly into your test environment. Check our <a href="#">Dataset</a> page
+                        for the types of data available for the API, also read <a href="#">Documentation</a> for the
+                        details and procedure to use the data.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="site-section">
+        <div class="container">
+            <h1 class="section-heading mb-5">You can use our API for</h1>
+            <div class="row justify-content-center">
+                <div class="col-md-5 mb-4">
+                    <div class="card h-100 feature">
+                        <div class="card-body text-center">
+                            <div class="wrap-icon icon-1">
+                                <span class="icon fas fa-chalkboard-teacher"></span>
+                            </div>
+                            <h5 class="card-title text-color">Education, Learning</h5>
+                            <p class="card-text">Feel free to use our API in various type of tutorials, we tried to
+                                cover all possible cases that you need for work on real project.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 mb-4">
+                    <div class="card h-100 feature">
+                        <div class="card-body text-center">
+                            <div class="wrap-icon icon-1">
+                                <span class="icon fas fa-address-card"></span>
+                            </div>
+                            <h5 class="card-title text-color">Demo page, Portfolio</h5>
+                            <p class="card-text">You can use our api tool for creating beautiful demo page or portfolio
+                                page, with out using server side.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 mb-4">
+                    <div class="card h-100 feature">
+                        <div class="card-body text-center">
+                            <div class="wrap-icon icon-1">
+                                <span class="icon fas fa-tools"></span>
+                            </div>
+                            <h5 class="card-title text-color">Testing</h5>
+                            <p class="card-text">Good sandbox for going deep with Unit tests for API. Our tool will help
+                                you to test your project or application by using our fake data API</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 mb-4">
+                    <div class="card h-100 feature">
+                        <div class="card-body text-center">
+                            <div class="wrap-icon icon-1">
+                                <span class="icon fas fa-laptop-code"></span>
+                            </div>
+                            <h5 class="card-title text-color">Skill evaluation</h5>
+                            <p class="card-text">Want to give your future employee an assignment? Our API is great for
+                                covering all required areas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="site-section" id="contact">
+        <div class="container">
+            <h1 class="section-heading mb-5">Have question? Contact Us</h1>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <form action="" method="post" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="name">Name <span class="text-danger">*</span></label>
+                                <input type="text" name="name" id="name" placeholder="Name" class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="email">Email <span class="text-danger">*</span></label>
+                                <input type="email" name="email" id="email" placeholder="Email" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message <span class="text-danger">*</span></label>
+                            <textarea name="message" id="message" rows="10" placeholder="Message"
+                                class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-gradient btn-block btn-lg">Submit</button>
+                        </div>
+                        <p class="form-text text-danger">Fields marked as * are mandatory fields</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0 text-center text-lg-left">
+                    <p style="line-height: 25px;">DataForDummies is providing a free API service to everyone and we try
+                        to create new sets of data for you. I <a href="#"><u>Farman Hafeez</u></a> created this website
+                        to help you to use our service in your projects or applications. Help us to improve our service
+                        and to keep this service alive...</p>
+                    <button class="btn btn-outline-light"><span class="mr-1"><i class="fas fa-donate"></i></span>
+                        Donate</button>
+                </div>
+                <div class="col-lg-7 ml-auto">
+                    <div class="row">
+                        <div class="col-md-4 mb-4 mb-md-0 text-center text-md-left">
+                            <h3 class="mb-4">Navigation</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Dataset</a></li>
+                                <li><a href="#">Documentation</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4 mb-4 mb-md-0 text-center text-md-left">
+                            <h3 class="mb-4">Navigation</h3>
+                            <ul class="list-unstyled">
+                                <li><a href="#">Test your API</a></li>
+                                <li><a href="#">Generate data</a></li>
+                                <li><a href="#">Copyright</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4 mb-4 mb-md-0 text-center text-md-left">
+                            <h3 class="mb-4">Follow Us</h3>
+                            <div class="d-flex flex-wrap justify-content-around">
+                                <a href="#" title="Github"><i class="fab fa-github fa-lg"></i></a>
+                                <a href="#" title="Facebook"><i class="fab fa-facebook fa-lg"></i></a>
+                                <a href="#" title="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
+                                <a href="#" title="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+                                <a href="#" title="LinkedIn"><i class="fab fa-linkedin fa-lg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center text-center pt-5">
+                <div class="col-12">
+                    <p class="mb-2">&copy; Copyright DataForDummies. All Rights Reserved</p>
+                    <p class="mb-0 small">Created & Designed with <span class="text-danger"><i
+                                class="fas fa-heart"></i></span> by Farman Hafeez</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

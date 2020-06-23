@@ -1,0 +1,7 @@
+ErrorDocument 404 /BriefNow/404.php
+
+Options +FollowSymLinks
+
+RewriteEngine On
+
+RewriteRule ^api-testing$ test.html [L]
