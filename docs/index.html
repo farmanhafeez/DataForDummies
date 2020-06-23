@@ -65,12 +65,23 @@
                 <div class="col-md-9">
 
                     <div class="blog-section">
-                        <h3 class="blog-title">Introduction</h3>
-                        <p class="lead">There are plenty of
-                            great data mocking libraries available for almost every language and platform. But not
-                            everyone is a programmer or has time to learn a new framework. Data For Dummies allows you
-                            to quickly and easily to download large amounts of randomly generated test data based on
-                            your own specs which you can then load directly into your test environment.</p>
+                        <h3 class="blog-title">Dataset</h3>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="list-group">
+                                    <a href="user" class="list-group-item">User</a>
+                                    <a href="employee" class="list-group-item">Employee</a>
+                                    <a href="student" class="list-group-item">Student</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="list-group">
+                                    <a href="course" class="list-group-item">Course</a>
+                                    <a href="country" class="list-group-item">Country</a>
+                                    <a href="car" class="list-group-item">Car</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="blog-section">
@@ -85,8 +96,19 @@
     success: function(data) {
         console.log(data);
     }
-});</code>
-</pre>
+});</code></pre>
+                        <p>If you are using PHP, you can use the CURL function in the code snippet below to get
+                            started.</p>
+                        <pre class="bg-dark mb-3">
+<code>$ch = curl_init();
+    
+curl_setopt($ch, CURLOPT_URL, "https://www.example.com/api/user");
+    
+$output = curl_exec($ch);
+    
+curl_close($ch);
+
+echo $output;</code></pre>
                     </div>
 
                     <div class="blog-section">
@@ -116,8 +138,7 @@
         "postcode": "",
         "ip_address": "185.148.209.250"
     }
-]</code>
-</pre>
+]</code></pre>
                     </div>
 
                     <div class="blog-section">
@@ -127,22 +148,7 @@
                         <pre class="bg-dark mb-3">
 <code>{
     error: "Something went wrong"
-}</code>
-</pre>
-                    </div>
-
-                    <div class="blog-section">
-                        <h3 class="blog-title">Dataset</h3>
-                        <p>Check our data specific documentation page for more detials on how to use the API for data
-                            requesting.</p>
-                        <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action">1. User</a>
-                            <a href="#" class="list-group-item list-group-item-action">2. Employee</a>
-                            <a href="#" class="list-group-item list-group-item-action">3. Student</a>
-                            <a href="#" class="list-group-item list-group-item-action">4. Course</a>
-                            <a href="#" class="list-group-item list-group-item-action">5. Country</a>
-                            <a href="#" class="list-group-item list-group-item-action">6. Car</a>
-                        </div>
+}</code></pre>
                     </div>
 
                 </div>
