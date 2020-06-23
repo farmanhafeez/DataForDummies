@@ -16,6 +16,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
         integrity="sha256-46r060N2LrChLLb5zowXQ72/iKKNiw/lAmygmHExk/o=" crossorigin="anonymous" />
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- CODEMIRROR -->
+    <script src="assets/codemirror/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="assets/codemirror/lib/codemirror.css">
+    <script src="assets/codemirror/mode/javascript/javascript.js"></script>
 </head>
 
 <body>
@@ -108,8 +112,7 @@
                             <h6>Header</h6>
                             <pre class="bg-dark mb-3"><code class="apiheader"></code></pre>
                             <h6>Content</h6>
-                            <textarea id="code" rows="20" class="form-control"></textarea>
-                            <!-- <pre class="bg-dark"><code class="code"></code></pre> -->
+                            <textarea id="code" class="form-control"></textarea>
                         </div>
                     </div>
 
@@ -195,6 +198,12 @@
 
     <script>
         $(document).ready(function () {
+            var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+                lineNumbers: true,
+                lineWrapping: true,
+                readOnly: true
+            });
+            editor.setSize(null, 400);
             $('form').submit(function (event) {
                 event.preventDefault();
                 const start = Date.now();
@@ -206,13 +215,18 @@
                 $(".success-text").empty();
                 $(".error-text").empty();
                 $(".apiheader").empty();
-                $("#code").empty();
                 var method = $('#type').val();
                 var url = $('#url').val();
                 if (url !== null) {
                     $.ajax({
+                        async: true,
                         method: method,
                         url: url,
+                        headers: {
+                            "Access-Control-Allow-Origin": "*",
+                            'Access-Control-Allow-Methods': "OPTIONS,GET,PUT,POST,DELETE",
+                            "Access-Control-Allow-Headers": "X-Requested-With, Content-Type"
+                        },
                         success: function (data, statusText, jqXHR) {
                             $('#loader').hide();
                             $('#btn-text').show();
@@ -221,8 +235,8 @@
                             $(".success-code").text(jqXHR.status);
                             $(".success-text").text(jqXHR.statusText);
                             $(".apiheader").text(jqXHR.getAllResponseHeaders());
-                            var json = JSON.stringify(data, undefined, 4);
-                            $("#code").text(json);
+                            var json = JSON.stringify(data, null, 2);
+                            editor.setValue(json);
                         },
                         error: function (data) {
                             $('#loader').hide();
@@ -233,7 +247,7 @@
                             $(".error-text").text(data.responseText);
                             $(".apiheader").text(data.getAllResponseHeaders());
                             var json = JSON.stringify(data, undefined, 4);
-                            $("#code").text(json);
+                            editor.setValue(json);
                         }
                     })
                 }
