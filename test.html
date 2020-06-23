@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DataForDummies - Test your API request and response</title>
     <!-- FAVICON -->
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-    <link rel="manifest" href="favicon/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
     <!-- CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
         integrity="sha256-46r060N2LrChLLb5zowXQ72/iKKNiw/lAmygmHExk/o=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -102,11 +102,14 @@
                                     <span class="text-danger error-code"></span></li>
                                 <li class="list-inline-item">Status: <span class="text-success success-text"></span>
                                     <span class="text-danger error-text"></span></li>
+                                <li class="list-inline-item">Time: <span class="text-success execution-time"></span>
+                                </li>
                             </ul>
                             <h6>Header</h6>
                             <pre class="bg-dark mb-3"><code class="apiheader"></code></pre>
                             <h6>Content</h6>
-                            <pre class="bg-dark"><code class="code"></code></pre>
+                            <textarea id="code" rows="20" class="form-control"></textarea>
+                            <!-- <pre class="bg-dark"><code class="code"></code></pre> -->
                         </div>
                     </div>
 
@@ -194,6 +197,8 @@
         $(document).ready(function () {
             $('form').submit(function (event) {
                 event.preventDefault();
+                const start = Date.now();
+                $('.execution-time').empty();
                 $('#btn-text').hide();
                 $('#loader').show();
                 $(".success-code").empty();
@@ -201,7 +206,7 @@
                 $(".success-text").empty();
                 $(".error-text").empty();
                 $(".apiheader").empty();
-                $(".code").empty();
+                $("#code").empty();
                 var method = $('#type').val();
                 var url = $('#url').val();
                 if (url !== null) {
@@ -211,20 +216,24 @@
                         success: function (data, statusText, jqXHR) {
                             $('#loader').hide();
                             $('#btn-text').show();
+                            const millis = Date.now() - start;
+                            $('.execution-time').text(millis / 1000 + ' s');
                             $(".success-code").text(jqXHR.status);
                             $(".success-text").text(jqXHR.statusText);
                             $(".apiheader").text(jqXHR.getAllResponseHeaders());
                             var json = JSON.stringify(data, undefined, 4);
-                            $(".code").text(json);
+                            $("#code").text(json);
                         },
                         error: function (data) {
                             $('#loader').hide();
                             $('#btn-text').show();
+                            const millis = Date.now() - start;
+                            $('.execution-time').text(millis / 1000 + ' s');
                             $(".error-code").text(data.status);
                             $(".error-text").text(data.responseText);
                             $(".apiheader").text(data.getAllResponseHeaders());
                             var json = JSON.stringify(data, undefined, 4);
-                            $(".code").text(json);
+                            $("#code").text(json);
                         }
                     })
                 }
