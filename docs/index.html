@@ -91,7 +91,7 @@
                             snippet below to get started.</p>
                         <pre class="bg-dark mb-3">
 <code>$.ajax({
-    url: 'https://www.example.com/api/user',
+    url: 'https://www.example.com/api/user/',
     dataType: 'json',
     success: function(data) {
         console.log(data);
@@ -102,7 +102,7 @@
                         <pre class="bg-dark mb-3">
 <code>$ch = curl_init();
     
-curl_setopt($ch, CURLOPT_URL, "https://www.example.com/api/user");
+curl_setopt($ch, CURLOPT_URL, "https://www.example.com/api/user/");
     
 $output = curl_exec($ch);
     
@@ -113,32 +113,30 @@ echo $output;</code></pre>
 
                     <div class="blog-section">
                         <h3 class="blog-title">Result</h3>
-                        <p>The API will provide you with a formatted object of your choice that you can parse and apply
-                            to your application. JSON is the default format. You can request a different format using
-                            the format parameter.
-                        </p>
+                        <p>The API will provide you the response with a JSON format</p>
                         <pre class="bg-dark mb-3">
-<code>[
-    {
-        "id": 1,
-        "firstname": "Clair",
-        "lastname": "Tatershall",
-        "username": "ctatershall0",
-        "password": "C49Tj31wX",
-        "email": "ctatershall0@walmart.com",
-        "phone": "291 155 2092",
-        "gender": "Female",
-        "dob": "1998-05-19",
-        "age": 22,
-        "image": "https://randomuser.me/api/portraits/women/85.jpg",
-        "street": "91 Gale Court",
-        "city": "Xinxu",
-        "state": "",
-        "country": "China",
-        "postcode": "",
-        "ip_address": "185.148.209.250"
-    }
-]</code></pre>
+<code>{
+    "users": [
+        {
+            "firstname": "Oralle",
+            "lastname": "Leet",
+             "username": "oleetod",
+            "password": "OA6REUUJkaR",
+            "email": "oleetod@hostgator.com",
+            "phone": "209 675 9312",
+            "gender": "Female",
+            "dob": "1994-12-03",
+            "age": 26,
+            "image": "https://randomuser.me/api/portraits/women/60.jpg",
+            "street": "14994 Londonderry Pass",
+            "city": "Temizhbekskaya",
+            "state": "",
+            "country": "Russia",
+            "postcode": "186755",
+            "ip_address": "135.245.202.88"
+        }
+    ]
+}</code></pre>
                     </div>
 
                     <div class="blog-section">
@@ -147,7 +145,7 @@ echo $output;</code></pre>
                             JSON object with an error.</p>
                         <pre class="bg-dark mb-3">
 <code>{
-    error: "Something went wrong"
+    "error": "Something went wrong"
 }</code></pre>
                     </div>
 
