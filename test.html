@@ -56,7 +56,7 @@
         <div class="jumbotron jumbotron-fluid">
             <div class="container text-center">
                 <h1 class="hero-section">Test your API</h1>
-                <p class="lead">Send HTTP requests to the server and check server responses</p>
+                <p class="lead">Send API requests to the server and check server responses</p>
             </div>
         </div>
     </div>
@@ -219,6 +219,7 @@
                         async: true,
                         method: method,
                         url: url,
+                        dataType: 'json',
                         headers: {
                             "Access-Control-Allow-Origin": "*",
                             'Access-Control-Allow-Methods': "OPTIONS,GET,PUT,POST,DELETE",
@@ -232,8 +233,10 @@
                             $(".success-code").text(jqXHR.status);
                             $(".success-text").text(jqXHR.statusText);
                             $(".apiheader").text(jqXHR.getAllResponseHeaders());
-                            var json = JSON.stringify(data, null, 2);
+                            console.log(data);
+                            var json = JSON.stringify(data, undefined, 2);
                             editor.setValue(json);
+                            console.log(json);
                         },
                         error: function (data) {
                             $('#loader').hide();
@@ -243,8 +246,10 @@
                             $(".error-code").text(data.status);
                             $(".error-text").text(data.responseText);
                             $(".apiheader").text(data.getAllResponseHeaders());
-                            var json = JSON.stringify(data, undefined, 4);
+                            console.log(data);
+                            var json = JSON.stringify(data, undefined, 2);
                             editor.setValue(json);
+                            console.log(json);
                         }
                     })
                 }
