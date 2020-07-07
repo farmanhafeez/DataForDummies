@@ -6,6 +6,7 @@ RewriteEngine On
 
 RewriteRule ^api-testing$ test.html [L]
 RewriteRule ^copyright$ copyright.html [L]
+RewriteRule ^generate-data$ generate.php [L]
 RewriteRule ^docs/user$ docs/user.html [L]
 RewriteRule ^docs/employee$ docs/employee.html [L]
 RewriteRule ^docs/student$ docs/student.html [L]

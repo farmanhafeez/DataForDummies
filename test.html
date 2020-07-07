@@ -38,7 +38,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <div class="navbar-nav mr-auto">
                         <a class="nav-item nav-link" href="./docs/"><span><i class="fas fa-book mr-1"></i></span>
-                            Documentation</a>
+                            API Docs</a>
                         <a class="nav-item nav-link" href=""><span><i class="fas fa-check-square mr-1"></i></span>
                             Test your API</a>
                         <a class="nav-item nav-link" href="generate-data"><span><i
@@ -61,31 +61,30 @@
         </div>
     </div>
 
-    <!-- API TESTING TOOl -->
-    <div class="site-section">
-        <div class="container">
+    <div class="container">
+        <!-- API TESTING TOOl -->
+        <div class="site-section">
             <h1 class="section-heading mb-5">API testing tool</h1>
-            <div class="row">
-                <div class="col-md-8">
-
+            <div class="row justify-content-center">
+                <div class="col-md-9">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <form method="post" autocomplete="off">
+                            <form method="post" autocomplete="off" id="api-form">
                                 <div class="row">
-                                    <div class="form-group col-md-3">
+                                    <div class="form-group col-md-4">
                                         <label for="type">Method</label>
                                         <select name="type" id="type" class="form-control">
                                             <option value="GET">GET</option>
                                             <option value="POST">POST</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-9">
+                                    <div class="form-group col-md-8">
                                         <label for="url">URL</label>
                                         <input type="text" name="url" id="url" class="form-control"
                                             placeholder="https://www.example.com/api/" required>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <button type="submit" class="btn btn-gradient btn-block btn-lg" id="response">
+                                    <div class="form-group col-md-4 mb-0">
+                                        <button type="submit" class="btn btn-gradient btn-block" id="response">
                                             <div id="btn-text">Send request</div>
                                             <span class="spinner-border spinner-border-sm" role="status"
                                                 aria-hidden="true" id="loader" style="display: none;"></span>
@@ -96,9 +95,17 @@
                         </div>
                     </div>
 
-                    <div class="card mb-3 mb-md-0">
+                    <div class="card mb-3">
                         <h5 class="card-header bg-white border-0">Response:</h5>
                         <div class="card-body">
+                            <div class="text-right download-form" style="display: none;">
+                                <form action="query.php" method="post">
+                                    <input type="hidden" name="jsondata" id="json-data">
+                                    <button type="submit" class="btn btn-gradient" name="download-btn"
+                                        id="download-btn"><i class="fas fa-download mr-1 fa-sm"></i> Download
+                                        data</button>
+                                </form>
+                            </div>
                             <ul class="list-inline">
                                 <li class="list-inline-item">Code: <span class="text-success success-code"></span>
                                     <span class="text-danger error-code"></span></li>
@@ -114,19 +121,84 @@
                         </div>
                     </div>
 
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card">
+                    <div class="card mb-3">
                         <h5 class="card-header bg-white border-0">API Testing Made Easy</h5>
                         <div class="card-body">DataForDummies is an online API testing and prototyping tool. Test your
                             API by sending API requests to the server right from your browser, and check the server
-                            responses. Post requests directly from your browser</div>
+                            responses. Send API requests directly from your browser and download the response data.
+                        </div>
                         <div class="card-footer bg-white border-0">Note: API response time is depends on the amount of
                             data</div>
                     </div>
-                </div>
 
+                    <div class="card mb-3">
+                        <h5 class="card-header bg-white border-0">About API testing tool</h5>
+                        <div class="card-body">
+                            <ol type="1">
+                                <li class="mb-2">The method select box will let you select the type of API request you
+                                    want to send. For example, GET or POST. The URL input box will let you add the API
+                                    request URL. For example, https://www.example.com/api/. The send request button will
+                                    send the API request to the URL with the method you specified in the select box.
+                                </li>
+                                <li class="mb-2">The code text area will display you the response code you got from the
+                                    API response like 404, 200, 403 etc. The status text area will display you the API
+                                    response status like OK, Not Found, Forbidden etc. The time text area will display
+                                    you the execution time of the API request and response. It will display the timing
+                                    in seconds.</li>
+                                <li class="mb-2">The header content area will display all the HTTP header information
+                                    received from the API request. For example, Content-type, Connection, Server
+                                    information and etc.</li>
+                                <li class="mb-2">The content textarea will display you the API response data in JSON
+                                    format.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h5 class="card-header bg-white border-0">How to use?</h5>
+                        <div class="card-body">
+                            <ol type="1" class="mb-0">
+                                <li class="mb-2">Select the API request method from the dropdown select box.</li>
+                                <li class="mb-2">Enter the URL to send API request.</li>
+                                <li class="mb-2">Click the send request button to send the API request.</li>
+                                <li class="mb-2">Once the API request is sent, you will get the response data in below
+                                    textarea.</li>
+                                <li>Click on the download data button to download your response data.</li>
+                            </ol>
+                        </div>
+                        <div class="card-footer bg-white border-0 pt-0">Note: Our API testing tool supports only JSON
+                            data. If you request other than JSON, you will get an error message.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- OUR TOOL -->
+        <div class="site-section pt-0">
+            <h1 class="section-heading mb-5">Our other tools</h1>
+            <div class="row">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="card p-2 h-100">
+                        <div class="card-body">
+                            <h3 class="blog-title text-gradient mb-3">REST API</h3>
+                            <p>DataForDummies is a collective list of free API datasets for generating random test data.
+                                Load data directly into your test environment.</p>
+                            <p class="mb-0"><a href="docs/">Learn more <i class="fas fa-arrow-right fa-xs ml-1"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card p-2 h-100">
+                        <div class="card-body">
+                            <h3 class="blog-title text-gradient mb-3">Data Generation Tool</h3>
+                            <p>Need some mock data to test your app? DataForDummies lets you generate up to 5,000 rows
+                                of realistic test data in XML and JSON formats.</p>
+                            <p class="mb-0"><a href="generate-data">Learn more <i
+                                        class="fas fa-arrow-right fa-xs ml-1"></i></a></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -149,7 +221,7 @@
                             <h3 class="mb-4">Navigation</h3>
                             <ul class="list-unstyled">
                                 <li><a href="./">Home</a></li>
-                                <li><a href="./docs/">Documentation</a></li>
+                                <li><a href="./docs/">API Docs</a></li>
                                 <li><a href="">Test your API</a></li>
                             </ul>
                         </div>
@@ -200,8 +272,8 @@
                 lineWrapping: true,
                 readOnly: true
             });
-            editor.setSize(null, 400);
-            $('form').submit(function (event) {
+            editor.setSize(null, 300);
+            $('#api-form').submit(function (event) {
                 event.preventDefault();
                 const start = Date.now();
                 $('.execution-time').empty();
@@ -220,12 +292,8 @@
                         method: method,
                         url: url,
                         dataType: 'json',
-                        headers: {
-                            "Access-Control-Allow-Origin": "*",
-                            'Access-Control-Allow-Methods': "OPTIONS,GET,PUT,POST,DELETE",
-                            "Access-Control-Allow-Headers": "X-Requested-With, Content-Type"
-                        },
                         success: function (data, statusText, jqXHR) {
+                            $('.download-form').show();
                             $('#loader').hide();
                             $('#btn-text').show();
                             const millis = Date.now() - start;
@@ -233,10 +301,9 @@
                             $(".success-code").text(jqXHR.status);
                             $(".success-text").text(jqXHR.statusText);
                             $(".apiheader").text(jqXHR.getAllResponseHeaders());
-                            console.log(data);
-                            var json = JSON.stringify(data, undefined, 2);
+                            var json = JSON.stringify(data, null, 2);
                             editor.setValue(json);
-                            console.log(json);
+                            $("#json-data").attr('value', json);
                         },
                         error: function (data) {
                             $('#loader').hide();
@@ -246,10 +313,8 @@
                             $(".error-code").text(data.status);
                             $(".error-text").text(data.responseText);
                             $(".apiheader").text(data.getAllResponseHeaders());
-                            console.log(data);
-                            var json = JSON.stringify(data, undefined, 2);
+                            var json = JSON.stringify(data, null, 2);
                             editor.setValue(json);
-                            console.log(json);
                         }
                     })
                 }

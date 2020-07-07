@@ -46,3 +46,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'contact') {
         }
     }
 }
+
+// API TESTING
+if (isset($_POST['download-btn'])) {
+    $file = 'DataForDummies-api' . '.json';
+    file_put_contents($file, $_POST['jsondata']);
+    header("Content-type: application/json");
+    header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+    header('Content-Length: ' . filesize($file));
+    readfile($file);
+    unlink($file);
+}
