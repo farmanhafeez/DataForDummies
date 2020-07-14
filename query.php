@@ -57,3 +57,107 @@ if (isset($_POST['download-btn'])) {
     readfile($file);
     unlink($file);
 }
+
+// DATA GENERATION TOOL
+if (isset($_POST['data-generation-btn'])) {
+
+    $dataset = filter_var($_POST['data'], FILTER_SANITIZE_STRING);
+    $row = filter_var($_POST['rows'], FILTER_SANITIZE_NUMBER_INT);
+    $format = filter_var($_POST['format'], FILTER_SANITIZE_STRING);
+
+    $array = json_decode(file_get_contents('./data/' . $dataset . '/' . $dataset . '.json'), TRUE);
+    shuffle($array);
+    $arraypush = array(
+        $dataset => array()
+    );
+    $xmlArray = array();
+
+    if ($row >= 1 && $row <= 5000) {
+        if ($dataset != 'country') {
+            for ($i = 0; $i < $row; $i++) {
+                if (array_key_exists($array[$i]['id'], $array)) {
+                    unset($array[$i]['id']);
+                }
+            }
+            for ($i = 0; $i < $row; $i++) {
+                array_push($arraypush[$dataset], $array[$i]);
+                array_push($xmlArray, $array[$i]);
+            }
+        }
+        if ($dataset == 'country') {
+            for ($i = 0; $i < count($array); $i++) {
+                array_push($arraypush[$dataset], $array[$i]);
+                array_push($xmlArray, $array[$i]);
+            }
+        }
+        if ($format == 'json') {
+            $file = 'DataForDummies-' . $dataset . '.json';
+            file_put_contents($file, json_encode($arraypush, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+            header("Content-type: application/json");
+            header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            unlink($file);
+        }
+        if ($format == 'xml') {
+            function isNumeric($key)
+            {
+                if (is_numeric($key)) {
+                    return 'element';
+                } else {
+                    return $key;
+                }
+            }
+            function arrayXmls($val1, $tabUser1, $xmlDoc, $key1)
+            {
+                $tabUser2 = $tabUser1->appendChild($xmlDoc->createElement(isNumeric($key1)));
+                foreach ($val1 as $key2 => $val2) {
+                    if (is_array($val2)) {
+                        $tabUser3 = $tabUser2->appendChild($xmlDoc->createElement(isNumeric($key2)));
+                        foreach ($val2 as $key3 => $val3) {
+                            $tabUser3->appendChild($xmlDoc->createElement(isNumeric($key3), $val3));
+                        }
+                    } else {
+                        $tabUser2->appendChild($xmlDoc->createElement(isNumeric($key2), $val2));
+                    }
+                }
+            }
+            function arrayXml($val, $tabUser, $xmlDoc, $key)
+            {
+                $tabUser1 = $tabUser->appendChild($xmlDoc->createElement(isNumeric($key)));
+                foreach ($val as $key1 => $val1) {
+                    if (is_array($val1)) {
+                        arrayXmls($val1, $tabUser1, $xmlDoc, $key1);
+                    } else {
+                        $tabUser1->appendChild($xmlDoc->createElement(isNumeric($key1), $val1));
+                    }
+                }
+            }
+            function createXML($data, $dataset)
+            {
+                $xmlDoc = new DOMDocument();
+                $root = $xmlDoc->appendChild($xmlDoc->createElement($dataset));
+                foreach ($data as $results) {
+                    $tabUser = $root->appendChild($xmlDoc->createElement('results'));
+                    foreach ($results as $key => $val) {
+                        if (is_array($val)) {
+                            arrayXml($val, $tabUser, $xmlDoc, $key);
+                        } else {
+                            $tabUser->appendChild($xmlDoc->createElement(isNumeric($key), $val));
+                        }
+                    }
+                }
+
+                $xmlDoc->formatOutput = true;
+                $file = 'DataForDummies-' . $dataset . '.xml';
+                file_put_contents($file, $xmlDoc->saveXML());
+                header("Content-type: application/xml");
+                header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+                header('Content-Length: ' . filesize($file));
+                readfile($file);
+                unlink($file);
+            }
+            createXML($xmlArray, $dataset);
+        }
+    }
+}
