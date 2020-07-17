@@ -101,9 +101,8 @@
                             <div class="text-right download-form" style="display: none;">
                                 <form action="query.php" method="post">
                                     <input type="hidden" name="jsondata" id="json-data">
-                                    <button type="submit" class="btn btn-gradient" name="download-btn"
-                                        id="download-btn"><i class="fas fa-download mr-1 fa-sm"></i> Download
-                                        data</button>
+                                    <button type="submit" class="btn btn-gradient" name="download-btn"><i
+                                            class="fas fa-download mr-1 fa-sm"></i> Download data</button>
                                 </form>
                             </div>
                             <ul class="list-inline">
@@ -306,7 +305,7 @@
                             $(".success-code").text(jqXHR.status);
                             $(".success-text").text(jqXHR.statusText);
                             $(".apiheader").text(jqXHR.getAllResponseHeaders());
-                            var json = JSON.stringify(data, null, 2);
+                            var json = JSON.stringify(data, null, 4);
                             editor.setValue(json);
                             $("#json-data").attr('value', json);
                         },
@@ -318,7 +317,7 @@
                             $(".error-code").text(data.status);
                             $(".error-text").text(data.responseText);
                             $(".apiheader").text(data.getAllResponseHeaders());
-                            var json = JSON.stringify(data, null, 2);
+                            var json = JSON.stringify(data, null, 4);
                             editor.setValue(json);
                         }
                     })

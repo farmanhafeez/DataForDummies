@@ -49,8 +49,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'contact') {
 
 // API TESTING
 if (isset($_POST['download-btn'])) {
-    $file = 'DataForDummies-api' . '.json';
-    file_put_contents($file, $_POST['jsondata']);
+    $data = $_POST['jsondata'];
+    $file = 'DFD-api' . '.json';
+    file_put_contents($file, $data);
     header("Content-type: application/json");
     header('Content-Disposition: attachment; filename="' . basename($file) . '"');
     header('Content-Length: ' . filesize($file));
@@ -91,8 +92,8 @@ if (isset($_POST['data-generation-btn'])) {
             }
         }
         if ($format == 'json') {
-            $file = 'DataForDummies-' . $dataset . '.json';
-            file_put_contents($file, json_encode($arraypush, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+            $file = 'DFD-' . $dataset . '.json';
+            file_put_contents($file, json_encode($arraypush, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
             header("Content-type: application/json");
             header('Content-Disposition: attachment; filename="' . basename($file) . '"');
             header('Content-Length: ' . filesize($file));
@@ -149,7 +150,7 @@ if (isset($_POST['data-generation-btn'])) {
                 }
 
                 $xmlDoc->formatOutput = true;
-                $file = 'DataForDummies-' . $dataset . '.xml';
+                $file = 'DFD-' . $dataset . '.xml';
                 file_put_contents($file, $xmlDoc->saveXML());
                 header("Content-type: application/xml");
                 header('Content-Disposition: attachment; filename="' . basename($file) . '"');
@@ -160,4 +161,17 @@ if (isset($_POST['data-generation-btn'])) {
             createXML($xmlArray, $dataset);
         }
     }
+}
+
+// JSON TO XML CONVERTER
+if (isset($_POST['xmldownload'])) {
+
+    $data = $_POST['xmldata'];
+    $file = 'DFD-jsontoxml' . '.xml';
+    file_put_contents($file, $data);
+    header("Content-type: application/xml");
+    header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+    header('Content-Length: ' . filesize($file));
+    readfile($file);
+    unlink($file);
 }
