@@ -54,7 +54,8 @@ var json2xml = typeof exports === "undefined" ? {} : exports; // like commonjs
         for (var m in o) {
             xml += toXml(o[m], m, "");
         }
-
+        xml = xml.replace(/<[0-9]{1,}>/g, "<element>");
+        xml = xml.replace(/<\/+[0-9]{1,}>/g, "</element>");
         return xml;
     };
 
