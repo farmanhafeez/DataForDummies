@@ -256,7 +256,7 @@
                     }
                     fr.readAsText(this.files[0]);
                 } else {
-                    jsoneditor.setValue('Please select JSON file...')
+                    jsoneditor.setValue('Please select JSON file...');
                 }
             })
 
@@ -271,16 +271,14 @@
                         url: url,
                         dataType: 'JSON',
                         success: function (data) {
-                            var json = JSON.stringify(data, null, 4);
-                            jsoneditor.setValue(json);
+                            jsoneditor.setValue(vkbeautify.json(data, 4));
                         },
-                        error: function (data) {
-                            var json = JSON.stringify(data, null, 4);
-                            jsoneditor.setValue(json);
+                        error: function () {
+                            jsoneditor.setValue("Unable to load data from url!");
                         }
                     })
                 } else {
-                    jsoneditor.setValue("Please enter URL to load data...")
+                    jsoneditor.setValue("Please enter URL to load data...");
                 }
             })
 
@@ -299,7 +297,7 @@
                     }
                 }
                 else {
-                    xmleditor.setValue("Please add JSON data...")
+                    xmleditor.setValue("Please add JSON data...");
                 }
             })
 
@@ -317,7 +315,7 @@
                 if (data != "") {
                     xmleditor.setValue(vkbeautify.xml(data, 4));
                 } else {
-                    xmleditor.setValue("The result is empty!")
+                    xmleditor.setValue("The result is empty!");
                 }
             })
 
@@ -326,7 +324,7 @@
                 if (data != "") {
                     jsoneditor.setValue(vkbeautify.json(data, 4));
                 } else {
-                    jsoneditor.setValue("The result is empty!")
+                    jsoneditor.setValue("The result is empty!");
                 }
             })
         })

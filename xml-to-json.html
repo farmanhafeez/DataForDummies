@@ -74,13 +74,13 @@
                         <i class="fas fa-cloud-upload-alt mr-1 fa-sm"></i> Load URL</button>
                     <button class="btn btn-outline-dark ml-2 my-2" id="convert">
                         <i class="fas fa-angle-double-right mr-1"></i>Convert</button>
-                    <button class="btn btn-outline-dark ml-2 my-2" id="beautify-json">
-                        <i class="fas fa-palette mr-1 fa-sm"></i> Beautify JSON</button>
                     <button class="btn btn-outline-dark ml-2 my-2" id="beautify-xml">
                         <i class="fas fa-palette mr-1 fa-sm"></i> Beautify XML</button>
+                    <button class="btn btn-outline-dark ml-2 my-2" id="beautify-json">
+                        <i class="fas fa-palette mr-1 fa-sm"></i> Beautify JSON</button>
                     <form action="query.php" method="post">
-                        <input type="hidden" name="xmldata" id="xmldata">
-                        <button type="submit" class="btn btn-outline-dark ml-2 my-2" name="xmldownload">
+                        <input type="hidden" name="jsondata" id="jsondata">
+                        <button type="submit" class="btn btn-outline-dark ml-2 my-2" name="jsondownload">
                             <i class="fas fa-download mr-1 fa-sm"></i> Download</button>
                     </form>
                     <button class="btn btn-outline-dark ml-2 my-2" id="clear">
@@ -90,21 +90,21 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card mb-3">
-                        <h5 class="card-header bg-white border-0">Enter json here:</h5>
+                        <h5 class="card-header bg-white border-0">Enter XML here:</h5>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="json"><b>Option 1:</b> Copy-paste your JSON string here</label>
-                                <textarea name="json" id="json" class="form-control"></textarea>
+                                <label for="json"><b>Option 1:</b> Copy-paste your XML here</label>
+                                <textarea name="xml" id="xml" class="form-control"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="file"><b>Option 2:</b> Or upload your JSON file</label>
-                                <input type="file" name="file" id="file" class="form-control" accept=".json">
+                                <label for="file"><b>Option 2:</b> Or upload your XML file</label>
+                                <input type="file" name="file" id="file" class="form-control" accept=".xml">
                             </div>
                             <div class="form-group mb-0">
                                 <label for="url"><b>Option 3:</b> Or load directly from URL</label>
                                 <input type="text" name="url" id="url" class="form-control" placeholder="Enter URL">
                                 <small id="passwordHelpBlock" class="form-text text-muted">
-                                    Click on Load URL button to fetch JSON data through API.
+                                    Click on Load URL button to fetch XML data through API.
                                 </small>
                             </div>
                         </div>
@@ -116,10 +116,10 @@
                         <h5 class="card-header bg-white border-0">Result:</h5>
                         <div class="card-body">
                             <div class="form-group mb-0">
-                                <label for="xml">Formatted XML</label>
-                                <textarea name="xml" id="xml" class="form-control"></textarea>
+                                <label for="xml">Formatted JSON</label>
+                                <textarea name="json" id="json" class="form-control"></textarea>
                                 <small id="passwordHelpBlock" class="form-text text-muted">
-                                    You can edit and download this formatted XML.
+                                    You can edit and download this formatted JSON.
                                 </small>
                             </div>
                         </div>
@@ -233,73 +233,75 @@
                 lineNumbers: true,
                 lineWrapping: true
             });
-            jsoneditor.setSize(null, 400);
+            jsoneditor.setSize(null, 600);
             var xmleditor = CodeMirror.fromTextArea(document.getElementById('xml'), {
                 mode: 'xml',
                 lineNumbers: true,
                 lineWrapping: true
             });
-            xmleditor.setSize(null, 600);
+            xmleditor.setSize(null, 400);
 
             $('#file').change(function () {
-                jsoneditor.setValue("");
-                jsoneditor.clearHistory();
+                xmleditor.setValue("");
+                xmleditor.clearHistory();
                 document.getElementById('url').value = "";
-                jsoneditor.setValue("Loading please wait...");
-                var fileTypes = 'json';
+                xmleditor.setValue("Loading please wait...");
+                var fileTypes = 'xml';
                 var extension = this.files[0].name.split('.').pop().toLowerCase();
                 var isSuccess = fileTypes.indexOf(extension) > -1;
                 if (isSuccess) {
                     var fr = new FileReader();
                     fr.onload = function () {
-                        jsoneditor.setValue(fr.result);
+                        xmleditor.setValue(fr.result);
                     }
                     fr.readAsText(this.files[0]);
                 } else {
-                    jsoneditor.setValue('Please select JSON file...')
+                    xmleditor.setValue('Please select XML file...');
                 }
             })
 
             $('#load-url').click(function () {
-                jsoneditor.setValue("");
-                jsoneditor.clearHistory();
+                xmleditor.setValue("");
+                xmleditor.clearHistory();
                 document.getElementById('file').value = "";
-                jsoneditor.setValue("Loading please wait...");
+                xmleditor.setValue("Loading please wait...");
                 var url = $('#url').val();
                 if (url !== '') {
                     $.ajax({
                         url: url,
-                        dataType: 'JSON',
+                        dataType: 'text',
                         success: function (data) {
-                            var json = JSON.stringify(data, null, 4);
-                            jsoneditor.setValue(json);
+                            xmleditor.setValue(data);
                         },
-                        error: function (data) {
-                            var json = JSON.stringify(data, null, 4);
-                            jsoneditor.setValue(json);
+                        error: function () {
+                            xmleditor.setValue("Unable to load data from url!");
                         }
                     })
                 } else {
-                    jsoneditor.setValue("Please enter URL to load data...")
+                    xmleditor.setValue("Please enter URL to load data...");
                 }
             })
 
             $("#convert").click(function () {
-                var data = $.trim(jsoneditor.getValue());
+                var data = $.trim(xmleditor.getValue());
                 if (data != "") {
-                    try {
-                        if (data != "") {
-                            xml = json2xml.convert(JSON.parse(data));
-                            xml = '<?xml version="1.0" encoding="UTF-8" ?>\n<root>\n' + xml + '\n</root>';
-                            xmleditor.setValue(vkbeautify.xml(xml, 4));
-                            $('#xmldata').attr('value', vkbeautify.xml(xml, 4));
+                    $.ajax({
+                        url: 'query.php',
+                        data: { xmldata: data, action: 'xmltojson' },
+                        method: 'POST',
+                        dataType: 'json',
+                        success: function (data) {
+                            console.log(data);
+                            jsoneditor.setValue(vkbeautify.json(data, 4));
+                            $('#jsondata').attr('value', vkbeautify.json(data, 4));
+                        },
+                        error: function (data) {
+                            jsoneditor.setValue(data.responseText);
                         }
-                    } catch (e) {
-                        xmleditor.setValue("Error in json data!");
-                    }
+                    })
                 }
                 else {
-                    xmleditor.setValue("Please add JSON data...")
+                    xmleditor.setValue("Please add XML data...");
                 }
             })
 
@@ -317,7 +319,7 @@
                 if (data != "") {
                     xmleditor.setValue(vkbeautify.xml(data, 4));
                 } else {
-                    xmleditor.setValue("The result is empty!")
+                    xmleditor.setValue("The result is empty!");
                 }
             })
 
@@ -326,7 +328,7 @@
                 if (data != "") {
                     jsoneditor.setValue(vkbeautify.json(data, 4));
                 } else {
-                    jsoneditor.setValue("The result is empty!")
+                    jsoneditor.setValue("The result is empty!");
                 }
             })
         })
