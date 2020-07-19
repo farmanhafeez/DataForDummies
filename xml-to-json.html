@@ -291,7 +291,6 @@
                         method: 'POST',
                         dataType: 'json',
                         success: function (data) {
-                            console.log(data);
                             jsoneditor.setValue(vkbeautify.json(data, 4));
                             $('#jsondata').attr('value', vkbeautify.json(data, 4));
                         },

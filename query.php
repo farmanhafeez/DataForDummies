@@ -178,10 +178,9 @@ if (isset($_POST['xmldownload'])) {
 // XML TO JSON CONVERTER
 if (isset($_POST['action']) && $_POST['action'] == 'xmltojson') {
     $data = $_POST['xmldata'];
-    foreach ($data->children() as $state) {
-        $states[] = array('state' => (string)$state->name);
-    }
-    echo json_encode($states);
+    $data = simplexml_load_string($data);
+    // $data = str_replace('element', '', $data);
+    echo json_encode($data);
 }
 if (isset($_POST['jsondownload'])) {
     $data = $_POST['jsondata'];
