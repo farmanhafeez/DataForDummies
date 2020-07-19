@@ -137,9 +137,9 @@ if (isset($_POST['data-generation-btn'])) {
             function createXML($data, $dataset)
             {
                 $xmlDoc = new DOMDocument();
-                $root = $xmlDoc->appendChild($xmlDoc->createElement($dataset));
+                $root = $xmlDoc->appendChild($xmlDoc->createElement('root'));
                 foreach ($data as $results) {
-                    $tabUser = $root->appendChild($xmlDoc->createElement('results'));
+                    $tabUser = $root->appendChild($xmlDoc->createElement($dataset));
                     foreach ($results as $key => $val) {
                         if (is_array($val)) {
                             arrayXml($val, $tabUser, $xmlDoc, $key);
