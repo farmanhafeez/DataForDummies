@@ -1,10 +1,10 @@
 <?php
 
-$data = file_get_contents('./api/car/test.json');
-$array = json_decode($data, true);
-$arraypush = array();
+// $data = file_get_contents('./api/car/test.json');
+// $array = json_decode($data, true);
+// $arraypush = array();
 
-$id = 0;
+// $id = 0;
 
 // COURSE DATA
 
@@ -64,24 +64,24 @@ $id = 0;
 // }
 
 // EMPLOYEE DATA
-$empArray = array();
-for ($i = 0; $i < count($array); $i++) {
-    if (in_array($array[$i]['car_id'], $empArray)) {
-        continue;
-    } else {
-        $id++;
-        $newArray = array(
-            "id" => $id,
-            "car_id" => $array[$i]['car_id'],
-            "car_name" => $array[$i]['car_name'],
-            "car_maker" => $array[$i]['car_maker'],
-            "car_color" => $array[$i]['car_color'],
-            "production_year" => $array[$i]['production_year']
-        );
-        array_push($empArray, $array[$i]['car_id']);
-        array_push($arraypush, $newArray);
-    }
-}
+// $empArray = array();
+// for ($i = 0; $i < count($array); $i++) {
+//     if (in_array($array[$i]['car_id'], $empArray)) {
+//         continue;
+//     } else {
+//         $id++;
+//         $newArray = array(
+//             "id" => $id,
+//             "car_id" => $array[$i]['car_id'],
+//             "car_name" => $array[$i]['car_name'],
+//             "car_maker" => $array[$i]['car_maker'],
+//             "car_color" => $array[$i]['car_color'],
+//             "production_year" => $array[$i]['production_year']
+//         );
+//         array_push($empArray, $array[$i]['car_id']);
+//         array_push($arraypush, $newArray);
+//     }
+// }
 
 // USER DATA
 // $data2 = file_get_contents('./api/user/image.json');
@@ -142,4 +142,16 @@ for ($i = 0; $i < count($array); $i++) {
 //     array_push($arraypush, $newArray);
 // }
 
-echo json_encode($arraypush, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+// echo json_encode($arraypush, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+$xml = "<root>
+        <element>
+        <name>Argentina</name>
+        <topLevelDomain>.ar</topLevelDomain>
+        </element>
+        </root>";
+$data = simplexml_load_string($xml);
+$data = json_encode($data);
+$data = json_decode($data, true);
+$data = array_values($data);
+echo json_encode($data);

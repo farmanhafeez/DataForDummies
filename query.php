@@ -179,7 +179,6 @@ if (isset($_POST['xmldownload'])) {
 if (isset($_POST['action']) && $_POST['action'] == 'xmltojson') {
     $data = $_POST['xmldata'];
     $data = simplexml_load_string($data);
-    // $data = str_replace('element', '', $data);
     echo json_encode($data);
 }
 if (isset($_POST['jsondownload'])) {
