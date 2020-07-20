@@ -11,14 +11,22 @@ var json2xml = typeof exports === "undefined" ? {} : exports; // like commonjs
                     var hasChild = false;
                     xml += ind + "<" + name;
                     for (var m in v) {
-                        if (m.charAt(0) == "@")
-                            xml +=
-                                " " +
-                                m.substr(1) +
-                                '="' +
-                                v[m].toString() +
-                                '"';
-                        else hasChild = true;
+                        if (m.charAt(0) == "@") {
+                            var key = Object.keys(v[m]);
+                            var values = Object.values(v[m]);
+                            console.log(key);
+                            console.log(values);
+                            for (var i = 0; i < key.length; i++) {
+                                xml +=
+                                    " " +
+                                    key[i] +
+                                    '="' +
+                                    values[i].toString() +
+                                    '"';
+                            }
+                        } else {
+                            hasChild = true;
+                        }
                     }
                     xml += hasChild ? ">\n" : "/>";
                     if (hasChild) {
