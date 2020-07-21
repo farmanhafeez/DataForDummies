@@ -126,6 +126,7 @@ a {
 
 .blog-title {
     margin-bottom: 12px;
+    font-size: 1.5rem;
 }
 
 @media screen and (max-width: 992px) {
@@ -134,9 +135,6 @@ a {
     }
     .section-heading {
         font-size: 2.3rem;
-    }
-    .blog-title {
-        font-size: 1.5rem;
     }
 }
 
