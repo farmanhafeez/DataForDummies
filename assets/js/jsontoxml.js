@@ -14,8 +14,6 @@ var json2xml = typeof exports === "undefined" ? {} : exports; // like commonjs
                         if (m.charAt(0) == "@") {
                             var key = Object.keys(v[m]);
                             var values = Object.values(v[m]);
-                            console.log(key);
-                            console.log(values);
                             for (var i = 0; i < key.length; i++) {
                                 xml +=
                                     " " +

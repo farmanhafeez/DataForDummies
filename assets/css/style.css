@@ -16,6 +16,11 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
+.bg-gradient {
+    background: rgb(14,11,42);
+    background: linear-gradient(149deg, rgba(14,11,42,1) 39%, rgba(14,6,78,1) 100%);
+}
+
 .text-color {
     color: #0e0b2a;
 }

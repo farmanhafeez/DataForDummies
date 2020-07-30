@@ -1,20 +1,23 @@
 <?php
 
-$data = file_get_contents('user.json');
-$array = json_decode($data, true);
-shuffle($array);
+require '../query.php';
+
+$array = fileData('user');
 $arraypush = array(
     "users" => array()
 );
+$error = 0;
 
-$result = isset($_GET['result']) ? $_GET['result'] : null;
-$gender = isset($_GET['gender']) ? $_GET['gender'] : null;
-$country = isset($_GET['country']) ? $_GET['country'] : null;
-$minage = isset($_GET['minage']) ? $_GET['minage'] : null;
-$maxage = isset($_GET['maxage']) ? $_GET['maxage'] : null;
+$result = getUrlData('result');
+$gender = getUrlData('gender');
+$country = getUrlData('country');
+$minage = getUrlData('minage');
+$maxage = getUrlData('maxage');
+$format = isset($_GET['format']) ? $_GET['format'] : null;
 
 if ($result > 2000) {
-    echo json_encode(array("error" => "Something went wrong!"));
+    $error += 1;
+    echo returnError();
 } elseif ($result) {
     for ($i = 0; $i < $result; $i++) {
         array_push($arraypush['users'], $array[$i]);
@@ -44,17 +47,21 @@ if ($result > 2000) {
 }
 
 // Remove ID from the array
-for ($i = 0; $i < count($arraypush['users']); $i++) {
-    unset($arraypush['users'][$i]['id']);
+if (!empty($arraypush['users'])) {
+    for ($i = 0; $i < count($arraypush['users']); $i++) {
+        unset($arraypush['users'][$i]['id']);
+    }
+}
+if (!empty($xmlArray)) {
+    for ($i = 0; $i < count($xmlArray); $i++) {
+        unset($xmlArray[$i]['id']);
+    }
 }
 
-echo json_encode($arraypush, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-
-// for ($i = 0; $i < count($array); $i++) {
-//     if (in_array($array[$i]['country'], $arraypush['users'])) {
-//         continue;
-//     }
-//     array_push($arraypush['users'], $array[$i]['country']);
-// }
-
-// echo json_encode($arraypush['users']);
+if ($error == 0) {
+    if ($format == 'json' || $format == null) {
+        echo json_encode($arraypush, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    } elseif ($format == 'xml') {
+        echo jsonToXml(json_encode($arraypush, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+    }
+}

@@ -278,7 +278,7 @@
                 if (isSuccess) {
                     var fr = new FileReader();
                     fr.onload = function () {
-                        xmleditor.setValue(fr.result);
+                        xmleditor.setValue(vkbeautify.xml(fr.result, 4));
                     }
                     fr.readAsText(this.files[0]);
                 } else {
@@ -297,7 +297,7 @@
                         url: url,
                         dataType: 'text',
                         success: function (data) {
-                            xmleditor.setValue(data);
+                            xmleditor.setValue(vkbeautify.xml(data, 4));
                         },
                         error: function () {
                             xmleditor.setValue("Unable to load data from url!");
@@ -310,6 +310,7 @@
 
             $("#convert").click(function () {
                 var data = $.trim(xmleditor.getValue());
+                jsoneditor.setValue("Loading please wait...");
                 if (data != "") {
                     $.ajax({
                         url: 'query.php',
