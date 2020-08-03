@@ -17,58 +17,56 @@ function getUrlData($get)
     }
 }
 
-function jsonToXml($array)
+function jsonToXml($json, $dataset)
 {
-    $json = json_decode($array);
+    $array = json_decode($json, true);
+
     $xmlDoc = new DOMDocument('1.0', 'UTF-8');
     $root = $xmlDoc->appendChild($xmlDoc->createElement('root'));
-    $t = function ($v) {
-        $type = gettype($v);
-        switch ($type) {
-            case 'integer':
-                return 'number';
-            case 'double':
-                return 'number';
-            default:
-                return strtolower($type);
-        }
-    };
-    $f = function ($f, $root, $json, $s = false) use ($t, $xmlDoc) {
-        $root->setAttribute('type', $t($json));
-        if ($t($json) != 'array' && $t($json) != 'object') {
-            if ($t($json) == 'boolean') {
-                $root->appendChild($xmlDoc->createTextNode($json ? 'true' : 'false'));
+    $arrayXml = function ($arrayXml, $val, $key, $tab) use ($xmlDoc) {
+        $tab1 = $tab->appendChild($xmlDoc->createElement(is_numeric($key) ? 'element' : $key));
+        foreach ($val as $key1 => $val1) {
+            if (is_array($val1)) {
+                $arrayXml($arrayXml, $val1, $key1, $tab1);
             } else {
-                $root->appendChild($xmlDoc->createTextNode($json));
-            }
-        } else {
-            foreach ($json as $k => $v) {
-                if ($k == '__type' && $t($json) == 'object') {
-                    // $root->setAttribute('__type', $v);
-                } else {
-                    if ($t($v) == 'object') {
-                        $ch = $root->appendChild($xmlDoc->createElementNS(null, $s ? 'item' : $k));
-                        $f($f, $ch, $v, false);
-                    } else if ($t($v) == 'array') {
-                        $ch = $root->appendChild($xmlDoc->createElementNS(null, $s ? 'item' : $k));
-                        $f($f, $ch, $v, true);
-                    } else {
-                        $va = $xmlDoc->createElementNS(null, $s ? 'item' : $k);
-                        if ($t($v) == 'boolean') {
-                            $va->appendChild($xmlDoc->createTextNode($v ? 'true' : 'false'));
-                        } else {
-                            $va->appendChild($xmlDoc->createTextNode($v));
-                        }
-                        $ch = $root->appendChild($va);
-                        // $ch->setAttribute('type', $t($v));
-                    }
-                }
+                $tab1->appendChild($xmlDoc->createElement(is_numeric($key1) ? 'element' : $key1, $val1));
             }
         }
     };
-    $f($f, $root, $json, $t($json) == 'array');
+    foreach ($array as $results) {
+        $tab = $root->appendChild($xmlDoc->createElement($dataset));
+        foreach ($results as $key => $val) {
+            if (is_array($val)) {
+                $arrayXml($arrayXml, $val, $key, $tab);
+            } else {
+                $tab->appendChild($xmlDoc->createElement(is_numeric($key) ? 'element' : $key, $val));
+            }
+        }
+    }
     $xmlDoc->formatOutput = true;
     return $xmlDoc->saveXML();
+
+    // $xmlDoc = new DOMDocument('1.0', 'UTF-8');
+    // $root = $xmlDoc->appendChild($xmlDoc->createElement('root'));
+    // $f = function ($f, $root, $json) use ($xmlDoc, $dataset) {
+    //     // $root->setAttribute('type', $t($json));
+    //     // $tab = $root->appendChild($xmlDoc->createElement($dataset));
+    //     foreach ($json as $k => $v) {
+    //         if (gettype($v) == 'array') {
+    //             $ch = $xmlDoc->createElementNS(null, is_numeric($k) ? 'item' : $k);
+    //             $ch = $root->appendChild($ch);
+    //             $f($f, $ch, $v);
+    //         } else {
+    //             $va = $xmlDoc->createElementNS(null, is_numeric($k) ? 'item' : $k);
+    //             $va->appendChild($xmlDoc->createTextNode($v));
+    //             $ch = $root->appendChild($va);
+    //             // $ch->setAttribute('type', $t($v));
+    //         }
+    //     }
+    // };
+    // $f($f, $root, $json);
+    // $xmlDoc->formatOutput = true;
+    // return $xmlDoc->saveXML();
 }
 
 function returnError()

@@ -42,6 +42,7 @@ if ($error == 0) {
     if ($format == 'json' || $format == null) {
         echo json_encode($arraypush, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     } elseif ($format == 'xml') {
-        echo jsonToXml(json_encode($arraypush, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+        $json = json_encode($arraypush['country'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        echo jsonToXml($json, "country");
     }
 }
