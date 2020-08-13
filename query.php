@@ -100,52 +100,23 @@ if (isset($_POST['data-generation-btn'])) {
             unlink($file);
         }
         if ($format == 'xml') {
-            function isNumeric($key)
-            {
-                if (is_numeric($key)) {
-                    return 'element';
-                } else {
-                    return $key;
-                }
-            }
-            function arrayXmls($val1, $tabUser1, $xmlDoc, $key1)
-            {
-                $tabUser2 = $tabUser1->appendChild($xmlDoc->createElement(isNumeric($key1)));
-                foreach ($val1 as $key2 => $val2) {
-                    if (is_array($val2)) {
-                        $tabUser3 = $tabUser2->appendChild($xmlDoc->createElement(isNumeric($key2)));
-                        foreach ($val2 as $key3 => $val3) {
-                            $tabUser3->appendChild($xmlDoc->createElement(isNumeric($key3), $val3));
-                        }
-                    } else {
-                        $tabUser2->appendChild($xmlDoc->createElement(isNumeric($key2), $val2));
-                    }
-                }
-            }
-            function arrayXml($val, $tabUser, $xmlDoc, $key)
-            {
-                $tabUser1 = $tabUser->appendChild($xmlDoc->createElement(isNumeric($key)));
-                foreach ($val as $key1 => $val1) {
-                    if (is_array($val1)) {
-                        arrayXmls($val1, $tabUser1, $xmlDoc, $key1);
-                    } else {
-                        $tabUser1->appendChild($xmlDoc->createElement(isNumeric($key1), $val1));
-                    }
-                }
-            }
             function createXML($data, $dataset)
             {
                 $xmlDoc = new DOMDocument('1.0', 'UTF-8');
                 $root = $xmlDoc->appendChild($xmlDoc->createElement('root'));
                 foreach ($data as $results) {
-                    $tabUser = $root->appendChild($xmlDoc->createElement($dataset));
-                    foreach ($results as $key => $val) {
-                        if (is_array($val)) {
-                            arrayXml($val, $tabUser, $xmlDoc, $key);
-                        } else {
-                            $tabUser->appendChild($xmlDoc->createElement(isNumeric($key), $val));
+                    $tab = $root->appendChild($xmlDoc->createElement($dataset));
+                    $arrayXml = function ($arrayXml, $results, $tab) use ($xmlDoc) {
+                        foreach ($results as $key => $val) {
+                            $tab1 = $tab->appendChild($xmlDoc->createElementNS(null, is_numeric($key) ? 'item' : $key));
+                            if (is_array($val)) {
+                                $arrayXml($arrayXml, $val, $tab1);
+                            } else {
+                                $tab1->appendChild($xmlDoc->createTextNode($val));
+                            }
                         }
-                    }
+                    };
+                    $arrayXml($arrayXml, $results, $tab);
                 }
 
                 $xmlDoc->formatOutput = true;

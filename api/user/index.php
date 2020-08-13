@@ -2,67 +2,111 @@
 
 require '../query.php';
 
+// Declaring array variables
 $array = fileData('user');
 $arraypush = array(
     "users" => array()
 );
-$error = 0;
+$tmpArray = array();
+$param = array("gender", "country", "age", "minage", "maxage");
+$error = '';
 
-$result = getUrlData('result');
+// Getting value from the URl
+$result = isset($_GET['result']) ? $_GET['result'] : 1;
 $gender = getUrlData('gender');
 $country = getUrlData('country');
+$age = getUrlData('age');
 $minage = getUrlData('minage');
 $maxage = getUrlData('maxage');
-$format = isset($_GET['format']) ? $_GET['format'] : null;
+$format = strtolower(getUrlData('format'));
 
-if ($result > 2000) {
-    $error += 1;
-    echo returnError();
-} elseif ($result) {
-    for ($i = 0; $i < $result; $i++) {
-        array_push($arraypush['users'], $array[$i]);
-    }
-} elseif ($gender) {
-    for ($i = 0; $i < count($array); $i++) {
-        if ($gender == $array[$i]['gender']) {
-            array_push($arraypush['users'], $array[$i]);
+// Data processing
+for ($i = 0; $i < count($param); $i++) {
+    if (!empty(${$param[$i]})) {
+        $type = ($param[$i] == 'minage' || $param[$i] == 'maxage') ? 'age' : $param[$i];
+        $assign = ($param[$i] == 'minage') ? 'lt' : (($param[$i] == 'maxage') ? 'gt' : 'et');
+        $data = processData($value = ${$param[$i]}, $type, $array, $tmpArray, $assign);
+        if (is_array($data)) {
+            $tmpArray = $data;
+        } elseif (is_numeric($data)) {
+            $error = $data;
         }
-    }
-} elseif ($country) {
-    for ($i = 0; $i < count($array); $i++) {
-        if ($country == $array[$i]['country']) {
-            array_push($arraypush['users'], $array[$i]);
-        }
-    }
-} elseif ($minage && $maxage) {
-    for ($i = 0; $i < count($array); $i++) {
-        if ($minage < $array[$i]['age'] && $maxage > $array[$i]['age']) {
-            array_push($arraypush['users'], $array[$i]);
-        }
-    }
-} else {
-    for ($i = 0; $i < count($array); $i++) {
-        array_push($arraypush['users'], $array[$i]);
+    } else {
+        continue;
     }
 }
 
-// Remove ID from the array
+// if ($gender) {
+//     $data = processData($value = $gender, $type = 'gender', $array, $tmpArray, $assign = 'et');
+//     if (is_array($data)) {
+//         $tmpArray = $data;
+//     } elseif (is_numeric($data)) {
+//         $error = $data;
+//     }
+// }
+// if ($country) {
+//     $data = processData($value = $country, $type = 'country', $array, $tmpArray, $assign = 'et');
+//     if (is_array($data)) {
+//         $tmpArray = $data;
+//     } elseif (is_numeric($data)) {
+//         $error = $data;
+//     }
+// }
+// if ($age) {
+//     $data = processData($value = $age, $type = 'age', $array, $tmpArray, $assign = 'et');
+//     if (is_array($data)) {
+//         $tmpArray = $data;
+//     } elseif (is_numeric($data)) {
+//         $error = $data;
+//     }
+// }
+// if ($minage) {
+//     $data = processData($value = $minage, $type = 'age', $array, $tmpArray, $assign = 'lt');
+//     if (is_array($data)) {
+//         $tmpArray = $data;
+//     } elseif (is_numeric($data)) {
+//         $error = $data;
+//     }
+// }
+// if ($maxage) {
+//     $data = processData($value = $maxage, $type = 'age', $array, $tmpArray, $assign = 'gt');
+//     if (is_array($data)) {
+//         $tmpArray = $data;
+//     } elseif (is_numeric($data)) {
+//         $error = $data;
+//     }
+// }
+if ($result) {
+    if ($result > 2000) {
+        $error = 403;
+    } else {
+        for ($i = 0; $i < $result; $i++) {
+            if (!empty($tmpArray)) {
+                if (array_key_exists($i, $tmpArray)) {
+                    array_push($arraypush['users'], $tmpArray[$i]);
+                }
+            } else {
+                array_push($arraypush['users'], $array[$i]);
+            }
+        }
+    }
+}
+
+// Removing ID from the array
 if (!empty($arraypush['users'])) {
     for ($i = 0; $i < count($arraypush['users']); $i++) {
         unset($arraypush['users'][$i]['id']);
     }
 }
-if (!empty($xmlArray)) {
-    for ($i = 0; $i < count($xmlArray); $i++) {
-        unset($xmlArray[$i]['id']);
-    }
-}
 
-if ($error == 0) {
+// Responding API
+if (empty($error)) {
     if ($format == 'json' || $format == null) {
         echo json_encode($arraypush, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     } elseif ($format == 'xml') {
         $json = json_encode($arraypush['users'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         echo jsonToXml($json, "users");
     }
+} else {
+    echo returnError($error, (empty($format)) ? "json" : $format);
 }
