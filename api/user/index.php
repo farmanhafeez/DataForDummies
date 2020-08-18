@@ -2,7 +2,7 @@
 
 require '../query.php';
 
-// Declaring array variables
+// Variables declaration
 $array = fileData('user');
 $arraypush = array(
     "users" => array()
@@ -35,47 +35,6 @@ for ($i = 0; $i < count($param); $i++) {
         continue;
     }
 }
-
-// if ($gender) {
-//     $data = processData($value = $gender, $type = 'gender', $array, $tmpArray, $assign = 'et');
-//     if (is_array($data)) {
-//         $tmpArray = $data;
-//     } elseif (is_numeric($data)) {
-//         $error = $data;
-//     }
-// }
-// if ($country) {
-//     $data = processData($value = $country, $type = 'country', $array, $tmpArray, $assign = 'et');
-//     if (is_array($data)) {
-//         $tmpArray = $data;
-//     } elseif (is_numeric($data)) {
-//         $error = $data;
-//     }
-// }
-// if ($age) {
-//     $data = processData($value = $age, $type = 'age', $array, $tmpArray, $assign = 'et');
-//     if (is_array($data)) {
-//         $tmpArray = $data;
-//     } elseif (is_numeric($data)) {
-//         $error = $data;
-//     }
-// }
-// if ($minage) {
-//     $data = processData($value = $minage, $type = 'age', $array, $tmpArray, $assign = 'lt');
-//     if (is_array($data)) {
-//         $tmpArray = $data;
-//     } elseif (is_numeric($data)) {
-//         $error = $data;
-//     }
-// }
-// if ($maxage) {
-//     $data = processData($value = $maxage, $type = 'age', $array, $tmpArray, $assign = 'gt');
-//     if (is_array($data)) {
-//         $tmpArray = $data;
-//     } elseif (is_numeric($data)) {
-//         $error = $data;
-//     }
-// }
 if ($result) {
     if ($result > 2000) {
         $error = 403;
@@ -102,8 +61,10 @@ if (!empty($arraypush['users'])) {
 // Responding API
 if (empty($error)) {
     if ($format == 'json' || $format == null) {
+        header("Content-type: application/json", true, 200);
         echo json_encode($arraypush, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     } elseif ($format == 'xml') {
+        header("Content-type: application/xml", true, 200);
         $json = json_encode($arraypush['users'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         echo jsonToXml($json, "users");
     }

@@ -81,8 +81,10 @@ function returnError($status, $format)
     $error = array("status" => $status, "message" => $msg);
     $error = json_encode($error, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     if ($format == "json") {
+        header('Content-type: application/json', false, $status);
         return $error;
     } elseif ($format == "xml") {
+        header('Content-type: application/xml', false, $status);
         $array = json_decode($error, true);
         $xmlDoc = new DOMDocument('1.0', 'UTF-8');
         $root = $xmlDoc->appendChild($xmlDoc->createElement('root'));

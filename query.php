@@ -50,9 +50,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'contact') {
 // API TESTING
 if (isset($_POST['download-btn'])) {
     $data = $_POST['jsondata'];
-    $file = 'DFD-api' . '.json';
+    $file = 'DFD-api' . '.txt';
     file_put_contents($file, $data);
-    header("Content-type: application/json");
+    header("Content-type: text/plain");
     header('Content-Disposition: attachment; filename="' . basename($file) . '"');
     header('Content-Length: ' . filesize($file));
     readfile($file);

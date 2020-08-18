@@ -292,13 +292,15 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+    <script src="assets/js/beautify.js"></script>
 
     <script>
         $(document).ready(function () {
             var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
                 lineNumbers: true,
                 lineWrapping: true,
-                readOnly: true
+                readOnly: true,
+                mode: 'xml'
             });
             editor.setSize(null, 400);
             $('#api-form').submit(function (event) {
@@ -312,6 +314,8 @@
                 $(".success-text").empty();
                 $(".error-text").empty();
                 $(".apiheader").empty();
+                editor.setValue('');
+                editor.clearHistory();
                 var method = $('#type').val();
                 var url = $('#url').val();
                 if (url !== null) {
@@ -319,7 +323,6 @@
                         async: true,
                         method: method,
                         url: url,
-                        dataType: 'json',
                         success: function (data, statusText, jqXHR) {
                             $('.download-form').show();
                             $('#loader').hide();
@@ -329,20 +332,35 @@
                             $(".success-code").text(jqXHR.status);
                             $(".success-text").text(jqXHR.statusText);
                             $(".apiheader").text(jqXHR.getAllResponseHeaders());
-                            var json = JSON.stringify(data, null, 4);
-                            editor.setValue(json);
-                            $("#json-data").attr('value', json);
+                            var type = jqXHR.getResponseHeader('Content-type');
+                            var explode = type.split(';');
+                            if (explode[0] === 'text/xml' || explode[0] === 'application/xml') {
+                                editor.setValue(vkbeautify.xml(data, 4));
+                            } else if (explode[0] === 'text/json' || explode[0] === 'application/json') {
+                                editor.setValue(vkbeautify.json(data, 4));
+                            } else {
+                                editor.setValue(data);
+                            }
+                            $("#json-data").attr('value', data);
                         },
                         error: function (data) {
+                            $('.download-form').hide();
                             $('#loader').hide();
                             $('#btn-text').show();
                             const millis = Date.now() - start;
                             $('.execution-time').text(millis / 1000 + ' s');
                             $(".error-code").text(data.status);
-                            $(".error-text").text(data.responseText);
+                            $(".error-text").text(data.statusText);
                             $(".apiheader").text(data.getAllResponseHeaders());
-                            var json = JSON.stringify(data, null, 4);
-                            editor.setValue(json);
+                            var type = data.getResponseHeader('Content-type');
+                            var explode = type.split(';');
+                            if (explode[0] === 'text/xml' || explode[0] === 'application/xml') {
+                                editor.setValue(vkbeautify.xml(data.responseText, 4));
+                            } else if (explode[0] === 'text/json' || explode[0] === 'application/json') {
+                                editor.setValue(vkbeautify.json(data.responseText, 4));
+                            } else {
+                                editor.setValue(data.responseText);
+                            }
                         }
                     })
                 }
