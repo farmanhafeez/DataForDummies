@@ -66,7 +66,7 @@ if (isset($_POST['data-generation-btn'])) {
     $row = filter_var($_POST['rows'], FILTER_SANITIZE_NUMBER_INT);
     $format = filter_var($_POST['format'], FILTER_SANITIZE_STRING);
 
-    $array = json_decode(file_get_contents('./data/' . $dataset . '/' . $dataset . '.json'), TRUE);
+    $array = json_decode(file_get_contents('./api/' . $dataset . '/' . $dataset . '.json'), TRUE);
     if ($dataset != 'country') {
         shuffle($array);
     }
