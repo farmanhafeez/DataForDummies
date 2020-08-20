@@ -1,43 +1,70 @@
 <?php
 
-$data = file_get_contents('car.json');
-$array = json_decode($data, true);
-shuffle($array);
+require '../query.php';
+
+// Variables declaration
+$array = fileData('car');
 $arraypush = array(
-    "cars" => array()
+    "car" => array()
 );
+$tmpArray = array();
+$param = array("model", "company", "year");
+$error = '';
 
-$result = isset($_GET['result']) ? $_GET['result'] : null;
-$model = isset($_GET['model']) ? $_GET['model'] : null;
-$company = isset($_GET['company']) ? $_GET['company'] : null;
+// Getting value from the URl
+$result = isset($_GET['result']) ? $_GET['result'] : 1;
+$model = getUrlData('model');
+$company = getUrlData('company');
+$year = getUrlData('year');
+$format = strtolower(getUrlData('format'));
 
-if ($result > 2000) {
-    echo json_encode(array("error" => "Something went wrong!"));
-} elseif ($result) {
-    for ($i = 0; $i < $result; $i++) {
-        array_push($arraypush['cars'], $array[$i]);
+// Data processing
+for ($i = 0; $i < count($param); $i++) {
+    if (!empty(${$param[$i]})) {
+        $type = ($param[$i] == 'model') ? 'car_name' : (($param[$i] == 'company') ? 'car_maker' : 'production_year');
+        $data = processData($value = ${$param[$i]}, $type, $array, $tmpArray, $assign = 'et');
+        if (is_array($data)) {
+            $tmpArray = $data;
+        } elseif (is_numeric($data)) {
+            $error = $data;
+        }
+    } else {
+        continue;
     }
-} elseif ($model) {
-    for ($i = 0; $i < count($array); $i++) {
-        if ($model == $array[$i]['car_name']) {
-            array_push($arraypush['cars'], $array[$i]);
+}
+if ($result) {
+    if ($result > 2000) {
+        $error = 403;
+    } else {
+        for ($i = 0; $i < $result; $i++) {
+            if (!empty($tmpArray)) {
+                if (array_key_exists($i, $tmpArray)) {
+                    array_push($arraypush['car'], $tmpArray[$i]);
+                }
+            } else {
+                array_push($arraypush['car'], $array[$i]);
+            }
         }
     }
-} elseif ($company) {
-    for ($i = 0; $i < count($array); $i++) {
-        if ($company == $array[$i]['car_maker']) {
-            array_push($arraypush['cars'], $array[$i]);
-        }
+}
+
+// Removing ID from the array
+if (!empty($arraypush['car'])) {
+    for ($i = 0; $i < count($arraypush['car']); $i++) {
+        unset($arraypush['car'][$i]['id']);
+    }
+}
+
+// Responding API
+if (empty($error)) {
+    if ($format == 'json' || $format == null) {
+        header("Content-type: application/json", true, 200);
+        echo json_encode($arraypush, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    } elseif ($format == 'xml') {
+        header("Content-type: application/xml", true, 200);
+        $json = json_encode($arraypush['car'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        echo jsonToXml($json, "car");
     }
 } else {
-    for ($i = 0; $i < count($array); $i++) {
-        array_push($arraypush['cars'], $array[$i]);
-    }
+    echo returnError($error, (empty($format)) ? "json" : $format);
 }
-
-// Remove ID from the array
-for ($i = 0; $i < count($arraypush['cars']); $i++) {
-    unset($arraypush['cars'][$i]['id']);
-}
-
-echo json_encode($arraypush, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);

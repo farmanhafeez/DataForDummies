@@ -1,8 +1,10 @@
 <?php
 
-$gender = '';
-$data = ${"gender"};
+$data = 'B.Sc';
 
-if (empty($data)) {
-    echo "success";
-}
+$data = ucfirst(strtolower($data));
+$data = str_replace(".", " ", $data);
+$explode = explode(" ", $data);
+$explode[1] = ucfirst($explode[1]);
+
+echo $explode[1];
