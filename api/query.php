@@ -2,8 +2,11 @@
 
 function fileData($file)
 {
-    $data = file_get_contents($file . '.json');
-    $array = json_decode($data, true);
+    $array = array();
+    $data = json_decode(file_get_contents($file . '.json'), true);
+    for ($i = 0; $i < 2000; $i++) {
+        $array[] = $data[$i];
+    }
     shuffle($array);
     return $array;
 }
