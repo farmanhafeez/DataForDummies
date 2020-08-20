@@ -64,7 +64,9 @@
     <div class="container">
         <!-- API TESTING TOOl -->
         <div class="site-section">
-            <h1 class="section-heading mb-5">API testing tool</h1>
+            <h1 class="section-heading mb-3">API testing tool</h1>
+            <p class="lead text-center mb-5">Online API testing tool. Test REST & SOAP APIs online by making API calls
+                directly from your browser with DataForDummies REST API Tool.</p>
             <div class="row justify-content-center">
                 <div class="col-md-9">
                     <div class="card mb-3">
@@ -100,7 +102,7 @@
                         <div class="card-body">
                             <div class="text-right download-form" style="display: none;">
                                 <form action="query.php" method="post">
-                                    <input type="hidden" name="jsondata" id="json-data">
+                                    <input type="hidden" name="jsondata" id="api-data">
                                     <button type="submit" class="btn btn-gradient" name="download-btn"><i
                                             class="fas fa-download mr-1 fa-sm"></i> Download data</button>
                                 </form>
@@ -113,18 +115,37 @@
                                 <li class="list-inline-item">Time: <span class="text-success execution-time"></span>
                                 </li>
                             </ul>
-                            <h6>Header</h6>
-                            <pre class="bg-dark mb-3"><code class="apiheader"></code></pre>
-                            <h6>Content</h6>
-                            <textarea id="code" class="form-control"></textarea>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="body-tab" data-toggle="tab" href="#body" role="tab"
+                                        aria-controls="body" aria-selected="true">Body</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="header-tab" data-toggle="tab" href="#header" role="tab"
+                                        aria-controls="header" aria-selected="false">Header</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="body" role="tabpanel"
+                                    aria-labelledby="body-tab">
+                                    <div class="pt-3">
+                                        <textarea id="code" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="header" role="tabpanel" aria-labelledby="header-tab">
+                                    <div class="pt-3">
+                                        <pre class="bg-dark"><code class="apiheader"></code></pre>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="card mb-3">
                         <h5 class="card-header bg-white border-0">API Testing Made Easy</h5>
-                        <div class="card-body">DataForDummies is an online API testing and prototyping tool. Test your
-                            API by sending API requests to the server right from your browser, and check the server
-                            responses. Send API requests directly from your browser and download the response data.
+                        <div class="card-body">DataForDummies API Tester is a free online API testing tool. Test your
+                            API, website or web service by sending REST API, SOAP API and HTTP API requests right from
+                            your browser, and check the server responses and download the API data.
                         </div>
                         <div class="card-footer bg-white border-0">Note: API response time is depends on the amount of
                             data</div>
@@ -323,6 +344,7 @@
                         async: true,
                         method: method,
                         url: url,
+                        dataType: "text",
                         success: function (data, statusText, jqXHR) {
                             $('.download-form').show();
                             $('#loader').hide();
@@ -341,7 +363,7 @@
                             } else {
                                 editor.setValue(data);
                             }
-                            $("#json-data").attr('value', data);
+                            $("#api-data").attr('value', data);
                         },
                         error: function (data) {
                             $('.download-form').hide();
