@@ -4,7 +4,7 @@ DataForDummies is a free API service which allows you to quickly and easily acce
 
 Try our [API Testing Tool](../api-testing) to test our API and download the API response data.
 
-# How to use
+## How to use
 
 To use our API service, you have to mention the dataset and you can also mention the fields based on your specification as a parameter in the URL. Then you can use any programming language to request the API. Below I have shared two sample code snippets of JavaScript and PHP to get started with.
 
@@ -34,7 +34,7 @@ curl_close($ch);
 echo $output;
 ```
 
-# Response example
+## Response example
 
 Our API service offers in JSON and XML format. You can specify the format by using the `format` paramter to request the data in JSON or XML format or you can leave this format paramter blank because the default format is JSON.
 
@@ -101,13 +101,13 @@ You can specify the format to request in XML.
 </root>
 ```
 
-# Dataset
+## Dataset
 
 We have collections of dataset to use for the API. Just mention the dataset name in the URL and you are good to use. Click on the link below to leant more about the dataset.
 
-1. [User](user)
-2. [Employee](employee)
-3. [Student](student)
-4. [Course](course)
-5. [Country](country)
-6. [Car](car)
+1. User
+2. Employee
+3. Student
+4. Course
+5. Country
+6. Car
