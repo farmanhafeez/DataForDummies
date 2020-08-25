@@ -2,7 +2,7 @@
 
 DataForDummies is a free API service which allows you to quickly and easily access large amounts of randomly generated test data based on your own specification which you can then load directly into your test environment.
 
-Try our [API Testing Tool](../api-testing) to test our API and download the API response data.
+Try our **API Testing Tool** to test our API and download the API response data.
 
 ## How to use
 
