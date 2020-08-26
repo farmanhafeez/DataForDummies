@@ -2,10 +2,10 @@ Options +FollowSymLinks
 
 RewriteEngine On
 
-RewriteRule ^api-testing$ test.html [L]
+RewriteRule ^api-testing-tool$ test.html [L]
 RewriteRule ^copyright$ copyright.html [L]
 RewriteRule ^generate-data$ generate.html [L]
 RewriteRule ^json-to-xml-converter$ json-to-xml.html [L]
 RewriteRule ^xml-to-json-converter$ xml-to-json.html [L]
-RewriteRule ^api-docs/$ docs/ [L]
-RewriteRule ^api-docs/([^/]+)$ docs/?data=$1 [L]
+RewriteRule ^docs/$ document/ [L]
+RewriteRule ^docs/([^/]+)$ document/?data=$1 [L]

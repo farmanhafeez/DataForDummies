@@ -46,7 +46,7 @@ $title = ($data == 'index') ? 'to generate random data' : 'for ' . $data . ' dat
                 <div class="navbar-nav mr-auto">
                     <a class="nav-item nav-link" href="./"><span><i class="fas fa-book mr-1"></i></span>
                         API Docs</a>
-                    <a class="nav-item nav-link" href="../api-testing"><span><i class="fas fa-check-square mr-1"></i></span> Test your API</a>
+                    <a class="nav-item nav-link" href="../api-testing-tool"><span><i class="fas fa-check-square mr-1"></i></span> Test your API</a>
                     <a class="nav-item nav-link" href="../generate-data"><span><i class="fas fa-plus-square mr-1"></i></span> Generate data</a>
                 </div>
                 <a href="../#contact">
@@ -84,7 +84,7 @@ $title = ($data == 'index') ? 'to generate random data' : 'for ' . $data . ' dat
                             <ul class="list-unstyled">
                                 <li><a href="../">Home</a></li>
                                 <li><a href="./">API Docs</a></li>
-                                <li><a href="../api-testing">Test your API</a></li>
+                                <li><a href="../api-testing-tool">Test your API</a></li>
                                 <li><a href="../generate-data">Generate data</a></li>
                             </ul>
                         </div>
