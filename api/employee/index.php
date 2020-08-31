@@ -18,7 +18,7 @@ $country = getUrlData('country');
 $age = getUrlData('age');
 $minage = getUrlData('minage');
 $maxage = getUrlData('maxage');
-$format = strtolower(getUrlData('format'));
+$format = getUrlData('format');
 
 // Data processing
 for ($i = 0; $i < count($param); $i++) {

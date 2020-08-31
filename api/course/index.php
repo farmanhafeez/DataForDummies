@@ -13,9 +13,9 @@ $error = '';
 
 // Getting value from the URl
 $result = isset($_GET['result']) ? $_GET['result'] : 1;
-$course = isset($_GET['course']) ? trim($_GET['course']) : null;
-$department = strtoupper(getUrlData('department'));
-$format = strtolower(getUrlData('format'));
+$course = getUrlData('course');
+$department = getUrlData('department');
+$format = getUrlData('format');
 
 // Data processing
 for ($i = 0; $i < count($param); $i++) {

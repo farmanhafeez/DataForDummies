@@ -17,12 +17,12 @@ $gender = getUrlData('gender');
 $country = getUrlData('country');
 $age = getUrlData('age');
 $cgpa = getUrlData('cgpa');
-$department = strtoupper(getUrlData('department'));
+$department = getUrlData('department');
 $minage = getUrlData('minage');
 $maxage = getUrlData('maxage');
 $mincgpa = getUrlData('mincgpa');
 $maxcgpa = getUrlData('maxcgpa');
-$format = strtolower(getUrlData('format'));
+$format = getUrlData('format');
 
 // Data processing
 for ($i = 0; $i < count($param); $i++) {

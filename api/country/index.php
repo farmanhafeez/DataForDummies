@@ -14,10 +14,10 @@ $error = '';
 
 // Getting value from the URl
 $result = isset($_GET['result']) ? $_GET['result'] : 1;
-$capital = isset($_GET['capital']) ? trim($_GET['capital']) : null;
-$country = isset($_GET['country']) ? trim($_GET['country']) : null;
-$region = isset($_GET['region']) ? trim($_GET['region']) : null;
-$format = strtolower(getUrlData('format'));
+$capital = getUrlData('capital');
+$country = getUrlData('country');
+$region = getUrlData('region');
+$format = getUrlData('format');
 
 // Data processing
 for ($i = 0; $i < count($param); $i++) {

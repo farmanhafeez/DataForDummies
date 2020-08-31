@@ -16,7 +16,7 @@ $result = isset($_GET['result']) ? $_GET['result'] : 1;
 $model = getUrlData('model');
 $company = getUrlData('company');
 $year = getUrlData('year');
-$format = strtolower(getUrlData('format'));
+$format = getUrlData('format');
 
 // Data processing
 for ($i = 0; $i < count($param); $i++) {

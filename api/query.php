@@ -16,8 +16,8 @@ function getUrlData($data)
     if (isset($_GET[$data])) {
         $data = $_GET[$data];
         $data = filter_var(trim($data), FILTER_SANITIZE_STRING);
-        $data = preg_replace('/[^A-Za-z0-9\-]/', '', $data);
-        $data = ucfirst(strtolower($data));
+        $data = preg_replace('/[^A-Za-z0-9. \-]/', '', $data);
+        $data = strtolower($data);
         return $data;
     } else {
         return null;
@@ -29,13 +29,13 @@ function processData($value, $type, $array, $tmpArray, $assign)
     $typeArr = array();
     $tmpArray = (!empty($tmpArray)) ? $tmpArray : $array;
     for ($i = 0; $i < count($tmpArray); $i++) {
-        array_push($typeArr, $tmpArray[$i][$type]);
+        array_push($typeArr, strtolower($tmpArray[$i][$type]));
     }
     if (in_array($value, $typeArr)) {
         $arr = array();
         for ($i = 0; $i < count($tmpArray); $i++) {
             if ($assign == 'et') {
-                if ($value == $tmpArray[$i][$type]) {
+                if ($value == strtolower($tmpArray[$i][$type])) {
                     $arr[] = $tmpArray[$i];
                 }
             } elseif ($assign == 'lt') {
