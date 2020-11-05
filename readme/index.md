@@ -136,8 +136,7 @@ We have collections of dataset to use for the API. Just mention the dataset name
 2. [Employee](employee)
 3. [Student](student)
 4. [Course](course)
-5. [Country](country)
-6. [Car](car)
+5. [Car](car)
 
 # Note
 

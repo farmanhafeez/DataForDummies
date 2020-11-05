@@ -67,28 +67,19 @@ if (isset($_POST['data-generation-btn'])) {
     $format = filter_var($_POST['format'], FILTER_SANITIZE_STRING);
 
     $array = json_decode(file_get_contents('./api/' . $dataset . '/' . $dataset . '.json'), TRUE);
-    if ($dataset != 'country') {
-        shuffle($array);
-    }
+    shuffle($array);
     $arraypush = array(
         $dataset => array()
     );
 
     if ($row >= 1 && $row <= 5000) {
-        if ($dataset != 'country') {
-            for ($i = 0; $i < $row; $i++) {
-                if (array_key_exists($array[$i]['id'], $array)) {
-                    unset($array[$i]['id']);
-                }
-            }
-            for ($i = 0; $i < $row; $i++) {
-                array_push($arraypush[$dataset], $array[$i]);
+        for ($i = 0; $i < $row; $i++) {
+            if (array_key_exists($array[$i]['id'], $array)) {
+                unset($array[$i]['id']);
             }
         }
-        if ($dataset == 'country') {
-            for ($i = 0; $i < count($array); $i++) {
-                array_push($arraypush[$dataset], $array[$i]);
-            }
+        for ($i = 0; $i < $row; $i++) {
+            array_push($arraypush[$dataset], $array[$i]);
         }
         if ($format == 'json') {
             $file = 'DFD-' . $dataset . '.json';
